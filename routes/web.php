@@ -47,6 +47,21 @@ Route::post('update/category/{id}', 'Admin\Category\CategoryController@Updatecat
  Route::get('edit/subcategory/{id}', 'Admin\Category\SubCategoryController@EditSubcat');
  Route::post('update/subcategory/{id}', 'Admin\Category\SubCategoryController@UpdateSubcat');
 
+ //Coupons All
+Route::get('admin/sub/coupon', 'Admin\Category\CouponController@Coupon')->name('admin.coupon');
+Route::post('admin/store/coupon', 'Admin\Category\CouponController@StoreCoupon')->name('store.coupon');
+Route::get('delete/coupon/{id}', 'Admin\Category\CouponController@DeleteCoupon');
+Route::get('edit/coupon/{id}', 'Admin\Category\CouponController@EditCoupon');
+Route::post('update/coupon/{id}', 'Admin\Category\CouponController@UpdateCoupon');
+
+//Neslater
+Route::get('admin/newslater', 'Admin\Category\NewslaterController@Newslater')->name('admin.newslater');
+Route::get('delete/sub/{id}', 'Admin\Category\NewslaterController@DeleteSub');
+
+//Frontend All Routes
+ Route::post('store/newslater', 'Frontcontroller@StoreNewslater')->name('store.newslater');
+
+
 
 
 
