@@ -31,22 +31,30 @@
 
                 <div class="form-layout">
                     <div class="row mg-b-25">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">Product Name: <span class="tx-danger">*</span></label>
                                 <input class="form-control" type="text" name="product_name"   placeholder="Enter Product Name">
                             </div>
                         </div><!-- col-4 -->
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">Product Code: <span class="tx-danger">*</span></label>
                                 <input class="form-control" type="text" name="product_code"   placeholder="Enter Product Code">
                             </div>
                         </div><!-- col-4 -->
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">Quantity: <span class="tx-danger">*</span></label>
                                 <input class="form-control" type="text" name="product_quantity"  placeholder="product quantity">
+                            </div>
+                        </div><!-- col-4 -->
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Discount Price: <span class="tx-danger">*</span></label>
+                                <input class="form-control" type="text" name="discount_price" placeholder="Discount Price">
                             </div>
                         </div><!-- col-4 -->
 

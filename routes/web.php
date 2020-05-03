@@ -47,6 +47,7 @@ Route::post('update/category/{id}', 'Admin\Category\CategoryController@Updatecat
  Route::get('edit/subcategory/{id}', 'Admin\Category\SubCategoryController@EditSubcat');
  Route::post('update/subcategory/{id}', 'Admin\Category\SubCategoryController@UpdateSubcat');
 
+
  //Coupons All
 Route::get('admin/sub/coupon', 'Admin\Category\CouponController@Coupon')->name('admin.coupon');
 Route::post('admin/store/coupon', 'Admin\Category\CouponController@StoreCoupon')->name('store.coupon');
@@ -58,9 +59,9 @@ Route::post('update/coupon/{id}', 'Admin\Category\CouponController@UpdateCoupon'
 Route::get('admin/newslater', 'Admin\Category\NewslaterController@Newslater')->name('admin.newslater');
 Route::get('delete/sub/{id}', 'Admin\Category\NewslaterController@DeleteSub');
 
+
 //For Show Sub Category with ajax
  Route::get('get/subcategory/{category_id}', 'Admin\ProductController@GetSubcat');
-
 
 //Product All Route
 Route::get('admin/product/all', 'Admin\ProductController@index')->name('all.product');
@@ -76,6 +77,21 @@ Route::get('edit/product/{id}', 'Admin\ProductController@EditProduct');
 Route::post('update/product/withoutphoto/{id}', 'Admin\ProductController@UpdateProductWithoutPhoto');
 Route::post('update/product/photo/{id}', 'Admin\ProductController@UpdateProductPhoto');
 
+//Blog Admin All
+Route::get('blog/category/list', 'Admin\PostController@BlogCatList')->name('add.blog.categorylist');
+Route::post('admin/store/blog', 'Admin\PostController@BlogCatStore')->name('store.blog.category');
+Route::get('delete/blogcategory/{id}', 'Admin\PostController@DeleteBlogCat');
+Route::get('edit/blogcategory/{id}', 'Admin\PostController@EditBlogCat');
+Route::post('update/blog/category/{id}', 'Admin\PostController@UpdateBlogCat');
+
+Route::get('admin/add/post', 'Admin\PostController@Create')->name('add.blogpost');
+Route::get('admin/all/post', 'Admin\PostController@index')->name('all.blogpost');
+
+Route::post('admin/store/post', 'Admin\PostController@store')->name('store.post');
+Route::get('delete/post/{id}', 'Admin\PostController@DeletePost');
+Route::get('edit/post/{id}', 'Admin\PostController@EditPost');
+
+Route::post('update/post/{id}', 'Admin\PostController@UpdatePost');
 
 //Frontend All Routes
  Route::post('store/newslater', 'Frontcontroller@StoreNewslater')->name('store.newslater');
