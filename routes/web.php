@@ -4,7 +4,7 @@
 
 Route::get('/', function () {return view('pages.index');});
 //auth & user
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
 Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
@@ -97,11 +97,25 @@ Route::post('update/post/{id}', 'Admin\PostController@UpdatePost');
  Route::post('store/newslater', 'Frontcontroller@StoreNewslater')->name('store.newslater');
 
 
+//ADD Wishlist
+Route::get('add/wishlist/{id}', 'WishlistController@addWishlist');
+
+//Add to Cart Route
+
+Route::get('/add/to/cart/{id}', 'CartController@AddCart');
+Route::get('check', 'CartController@check');
+
+Route::get('product/cart/', 'CartController@ShowCart')->name('show.cart');
+Route::get('remove/cart/{rowId}', 'CartController@removeCart');
+Route::post('update/cart/item', 'CartController@UpdateCart')->name('update.cartitem');
+
+Route::get('/cart/product/view/{id}', 'CartController@ViewProduct');
+Route::post('insert/into/cart', 'CartController@insertCart')->name('insert.into.cart');
 
 
 
-
-
+Route::get('/product/details/{id}/{product_name}', 'ProductController@ProductView');
+Route::post('cart/product/add/{id}', 'ProductController@AddCart');
 
 
 
