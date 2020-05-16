@@ -112,16 +112,56 @@ Route::post('update/cart/item', 'CartController@UpdateCart')->name('update.carti
 Route::get('/cart/product/view/{id}', 'CartController@ViewProduct');
 Route::post('insert/into/cart', 'CartController@insertCart')->name('insert.into.cart');
 
+Route::get('user/checkout/', 'CartController@Checkout')->name('user.checkout');
+Route::get('user/wishlist/', 'CartController@wishlist')->name('user.wishlist');
 
+Route::post('user/apply/coupon/', 'CartController@Coupon')->name('apply.coupon');
+Route::get('coupon/remove/', 'CartController@CouponRemove')->name('coupon.remove');
 
 Route::get('/product/details/{id}/{product_name}', 'ProductController@ProductView');
 Route::post('cart/product/add/{id}', 'ProductController@AddCart');
 
 
+//Blog Post Rout
+Route::get('blog/post/', 'BlogController@blog')->name('blog.post');
+
+Route::get('language/english', 'BlogController@English')->name('language.english');
+Route::get('language/italian', 'BlogController@Italian')->name('language.italian');
+
+Route::get('blog/single/{id}', 'BlogController@BlogSingle');
+
+//Payment Step
+Route::get('payment/page', 'CartController@PaymentPage')->name('payment.step');
+Route::post('user/payment/process/', 'PaymentController@Payment')->name('payment.process');
+
+Route::post('user/stripe/charge/', 'PaymentController@StripeCharge')->name('stripe.charge');
 
 
+//Product details Page
+Route::get('products/{id}', 'ProductController@ProductsView');
+Route::get('allcategory/{id}', 'ProductController@CategoryView');
 
+//Admin Order Route
 
+Route::get('admin/pading/order', 'Admin\OrderController@NewOrder')->name('admin.neworder');
+Route::get('admin/view/order/{id}', 'Admin\OrderController@ViewOrder');
+
+Route::get('admin/payment/accept/{id}', 'Admin\OrderController@PaymentAccept');
+Route::get('admin/payment/cancel/{id}', 'Admin\OrderController@PaymentCancel');
+
+Route::get('admin/accept/payment', 'Admin\OrderController@AcceptPayment')->name('admin.accept.payment');
+
+Route::get('admin/cancel/order', 'Admin\OrderController@CancelOrder')->name('admin.cancel.order');
+
+Route::get('admin/process/payment', 'Admin\OrderController@ProcessPayment')->name('admin.process.payment');
+Route::get('admin/success/payment', 'Admin\OrderController@SuccessPayment')->name('admin.success.payment');
+
+Route::get('admin/delivery/process/{id}', 'Admin\OrderController@DeleveryProcess');
+Route::get('admin/delivery/done/{id}', 'Admin\OrderController@DeleveryDone');
+
+//User Order Route
+Route::get('user/view/order/{id}', 'UserOrderController@ViewOrder');
+Route::get('/home', 'UserOrderController@index')->name('home');
 
 
 
