@@ -1,3 +1,7 @@
+@php
+    $setting = DB::table('sitesetting')->first();
+
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,8 +43,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        {{--<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/phone.png')}}" alt=""></div>{{ $setting->phone_one }}</div>
-                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/mail.png')}}" alt=""></div><a href="mailto:fastsales@gmail.com">{{ $setting->email }}</a></div>--}}
+                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/phone.png')}}" alt=""></div>{{ $setting->phone_one }}</div>
+                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/mail.png')}}" alt=""></div><a href="mailto:fastsales@gmail.com">{{ $setting->email }}</a></div>
                         <div class="top_bar_content ml-auto">
 
 
@@ -137,8 +141,9 @@
                         <div class="header_search">
                             <div class="header_search_content">
                                 <div class="header_search_form_container">
-                                    <form action="#" class="header_search_form clearfix">
-                                        <input type="search" required="required" class="header_search_input" placeholder="Search for products...">
+                                    <form method="post" action="{{route('product.search')}}" class="header_search_form clearfix">
+                                        @csrf
+       <input type="search" required="required" class="header_search_input" placeholder="Search for products..." name="search">
                                         <div class="custom_dropdown">
                                             <div class="custom_dropdown_list">
                                                 <span class="custom_dropdown_placeholder clc">All Categories</span>
@@ -214,32 +219,35 @@
 @yield('content')
     <!-- Footer -->
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
+        @php
+            $setting = DB::table('sitesetting')->first();
 
-                <div class="col-lg-3 footer_col">
-                    <div class="footer_column footer_contact">
-                        <div class="logo_container">
-                            <div class="logo"><a href="#">Name</a></div>
-                        </div>
-                        <div class="footer_title">Got Question? Call Us 24/7</div>
-                        <div class="footer_phone">+00 000 000 0000</div>
-                        <div class="footer_contact_text">
-                            <p>address</p>
-                            <p>adddres</p>
-                        </div>
-                        <div class="footer_social">
-                            <ul>
-                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                                <li><a href="#"><i class="fab fa-google"></i></a></li>
-                                <li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
-                            </ul>
+        @endphp
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 footer_col">
+                        <div class="footer_column footer_contact">
+                            <div class="logo_container">
+                                <div class="logo"><a href="#">{{ $setting->company_name }}</a></div>
+                            </div>
+                            <div class="footer_title">Got Question? Call Us 24/7</div>
+                            <div class="footer_phone">{{ $setting->phone_two }}</div>
+                            <div class="footer_contact_text">
+                                <p>{{ $setting->company_address }}</p>
+                            </div>
+                            <div class="footer_social">
+                                <ul>
+                                    <li><a href="{{ $setting->facebook }}"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="{{ $setting->twitter }}"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="{{ $setting->youtube }}"><i class="fab fa-youtube"></i></a></li>
+                                    <li><a href="{{ $setting->instagram }}"><i class="fab fa-instagram"></i></a></li>
+
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
 
                 <div class="col-lg-2 offset-lg-2">
                     <div class="footer_column">
@@ -313,6 +321,39 @@
     </div>
 </div>
 
+
+<!--Order Traking Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Your Status Code</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{ route('order.tracking') }}">
+                    @csrf
+                    <div class="modal-body">
+                        <label> Status Code</label>
+                        <input type="text" name="code" required="" class="form-control" placeholder="Your Order Status Code">
+                    </div>
+
+                    <button class="btn btn-danger" type="submit">Track Now </button>
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
 <script src="{{ asset('public/frontend/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{ asset('public/frontend/styles/bootstrap4/popper.js')}}"></script>
 <script src="{{ asset('public/frontend/styles/bootstrap4/bootstrap.min.js')}}"></script>
@@ -351,6 +392,32 @@
     }
     @endif
 </script>
+
+
+
+
+
+<script>
+    $(document).on("click", "#return", function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+        swal({
+            title: "Are you Want to Return?",
+            text: "Once Return,this will return your money !",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = link;
+                } else {
+                    swal("Cancel!");
+                }
+            });
+    });
+</script>
+
 </body>
 
 </html>

@@ -16,6 +16,7 @@ $order=DB::table('orders')->where('user_id',Auth::id())->orderBy('id','DESC')->l
                             <th scope="col">Payment ID</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Date</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Status Code</th>
                             <th scope="col">Action</th>
 
@@ -29,6 +30,22 @@ $order=DB::table('orders')->where('user_id',Auth::id())->orderBy('id','DESC')->l
                                 <td scope="col">{{$row->payment_id}}</td>
                                 <td scope="col">{{$row->total}}$</td>
                                 <td scope="col">{{$row->date}}</td>
+
+                                <td scope="col">
+                                    @if($row->status == 0)
+                                        <span class="badge badge-warning">Pending</span>
+                                    @elseif($row->status == 1)
+                                        <span class="badge badge-info">Payment Accept</span>
+                                    @elseif($row->status == 2)
+                                        <span class="badge badge-warning">Progress</span>
+                                    @elseif($row->status == 3)
+                                        <span class="badge badge-success">Delivered</span>
+                                    @else
+                                        <span class="badge badge-danger">Cancle</span>
+
+                                    @endif
+
+                                </td>
                                 <td scope="col">{{$row->status_code}}</td>
                                 <td scope="col">
                                     <a href="{{ URL::to('user/view/order/'.$row->id) }} " class="btn btn-sm btn-info">View</a>
@@ -51,8 +68,8 @@ $order=DB::table('orders')->where('user_id',Auth::id())->orderBy('id','DESC')->l
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="{{route('password.change')}}">Change Password</a></li>
-                            <li class="list-group-item">line one</li>
-                            <li class="list-group-item">line one</li>
+                            <li class="list-group-item">Edit Profile</li>
+                            <li class="list-group-item"><a href="{{route('success.orderlist')}}"> Return Order</a></li>
 
                         </ul>
                         <div class="card-body">

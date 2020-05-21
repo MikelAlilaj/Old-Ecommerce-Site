@@ -184,9 +184,9 @@
                 @if($order->status == 0)
                     <strong class="text-info text-center"> This order is in review  </strong>
                 @elseif($order->status == 1)
-                    <strong class="text-info text-center"> This order is in Process Delivery  </strong>
+                    <strong class="text-info text-center"> Payment Accept Under Process   </strong>
                 @elseif($order->status == 2)
-                    <strong class="text-success text-center">>Delivery Done</strong>
+                    <strong class="text-success text-center">>Packing Done Handover Process</strong>
                 @elseif($order->status == 4)
                     <strong class="text-danger text-center"> This order is not valid  </strong>
                 @else

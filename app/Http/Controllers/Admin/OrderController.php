@@ -96,8 +96,17 @@ class OrderController extends Controller
     }
 
 
-    public function DeleveryDone($id)
-    {
+    public function DeleveryDone($id){
+
+        $product = DB::table('orders_details')->where('order_id',$id)->get();
+        foreach($product as $row){
+            DB::table('products')
+                ->where('id',$row->product_id)
+                ->update(['product_quantity' => DB::raw('product_quantity-'.$row->quantity)]);
+
+        }
+
+
         DB::table('orders')->where('id', $id)->update(['status' => 3]);
         $notification = array(
             'messege' => 'Product Delivery Done',
@@ -105,4 +114,31 @@ class OrderController extends Controller
         );
         return Redirect()->route('admin.success.payment')->with($notification);
     }
+
+    public function seo(){
+        $seo = DB::table('seo')->first();
+        return view('admin.coupon.seo',compact('seo'));
+    }
+
+
+    public function UpdateSeo(Request $request){
+
+        $id = $request->id;
+
+        $data = array();
+        $data['meta_title'] = $request->meta_title;
+        $data['meta_author'] = $request->meta_author;
+        $data['meta_tag'] = $request->meta_tag;
+        $data['meta_description'] = $request->meta_description;
+        $data['google_analytics'] = $request->google_analytics;
+        $data['bing_analytics'] = $request->bing_analytics;
+        DB::table('seo')->where('id',$id)->Update($data);
+        $notification=array(
+            'messege'=>'Seo Updated Successfully',
+            'alert-type'=>'success'
+        );
+        return Redirect()->back()->with($notification);
+
+    }
+
 }

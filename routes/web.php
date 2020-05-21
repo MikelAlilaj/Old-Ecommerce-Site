@@ -1,5 +1,7 @@
-                                                                                                                                                                                                     <?php
-
+<?php
+//Socialite Route
+Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
+Route::get('/callback/{provider}', 'SocialController@callback');
 
 
 Route::get('/', function () {return view('pages.index');});
@@ -136,6 +138,8 @@ Route::post('user/payment/process/', 'PaymentController@Payment')->name('payment
 
 Route::post('user/stripe/charge/', 'PaymentController@StripeCharge')->name('stripe.charge');
 
+Route::post('user/oncash/charge/', 'PaymentController@OnCash')->name('oncash.charge');
+
 
 //Product details Page
 Route::get('products/{id}', 'ProductController@ProductsView');
@@ -163,8 +167,68 @@ Route::get('admin/delivery/done/{id}', 'Admin\OrderController@DeleveryDone');
 Route::get('user/view/order/{id}', 'UserOrderController@ViewOrder');
 Route::get('/home', 'UserOrderController@index')->name('home');
 
+//SEO Setting Route
+Route::get('admin/seo', 'Admin\OrderController@seo')->name('admin.seo');
+Route::post('admin/seo/update', 'Admin\OrderController@UpdateSeo')->name('update.seo');
 
 
+//Order Tracking Route
+Route::post('order/tracking', 'Frontcontroller@OrderTracking')->name('order.tracking');
+
+//Order Report Routes
+
+Route::get('admin/today/order', 'Admin\ReportController@TodayOrder')->name('today.order');
+Route::get('admin/today/delivery', 'Admin\ReportController@TodayDelivery')->name('today.delivery');
+
+Route::get('admin/this/month', 'Admin\ReportController@ThisMonth')->name('this.month');
+Route::get('admin/search/report', 'Admin\ReportController@Search')->name('search.report');
+
+Route::post('admin/search/by/year', 'Admin\ReportController@SearchByYear')->name('search.by.year');
+Route::post('admin/search/by/month', 'Admin\ReportController@SearchByMonth')->name('search.by.month');
+
+ Route::post('admin/search/by/date', 'Admin\ReportController@SearchByDate')->name('search.by.date');
+
+ // Admin Role Routes
+
+Route::get('admin/all/user', 'Admin\UserRoleController@UserRole')->name('admin.all.user');
+
+Route::get('admin/create/admin', 'Admin\UserRoleController@UserCreate')->name('create.admin');
 
 
+Route::post('admin/store/admin', 'Admin\UserRoleController@UserStore')->name('store.admin');
+
+Route::get('delete/admin/{id}', 'Admin\UserRoleController@UserDelete');
+Route::get('edit/admin/{id}', 'Admin\UserRoleController@UserEdit');
+
+Route::post('admin/update/admin', 'Admin\UserRoleController@UserUpdate')->name('update.admin');
+
+// Admin Site Setting Route
+Route::get('admin/site/setting', 'Admin\SettingController@SiteSetting')->name('admin.site.setting');
+
+Route::post('admin/sitesetting', 'Admin\SettingController@UpdateSiteSetting')->name('update.sitesetting');
+
+//Return Order Route
+Route::get('success/list/', 'PaymentController@SuccessList')->name('success.orderlist');
+
+Route::get('request/return/{id}', 'PaymentController@RequestReturn');
+
+
+Route::get('admin/return/request/', 'Admin\ReturnController@ReturnRequest')->name('admin.return.request');
+
+Route::get('admin/approve/return/{id}', 'Admin\ReturnController@ApproveReturn');
+
+Route::get('admin/all/return', 'Admin\ReturnController@AllReturn')->name('admin.all.return');
+
+ // Order Stock Route
+Route::get('admin/product/stock', 'Admin\UserRoleController@ProductStock')->name('admin.product.stock');
+
+/// Contact page Routes
+
+Route::get('contact/page', 'ContactController@Contact')->name('contact.page');
+Route::post('contact/form', 'ContactController@ContactForm')->name('contact.form');
+
+Route::get('admin/all/message', 'ContactController@AllMessage')->name('all.message');
+
+// Search Route
+Route::post('product/search', 'CartController@Search')->name('product.search');
 
